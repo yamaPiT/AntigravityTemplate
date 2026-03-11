@@ -1,5 +1,5 @@
 ---
-name: code-review
+name: code-reviewer
 description: 実装プロセスにおいて、プログラムのバグ・スタイルだけでなく、ASDoQモデルをコード言語に適用しコメント品質や保守性をレビューするスキルです。
 ---
 
