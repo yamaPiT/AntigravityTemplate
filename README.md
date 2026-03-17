@@ -22,23 +22,29 @@
 
 ```mermaid
 graph TD
-    Req["ステップ1: 要求定義<br>(Requirements Engineer)"] --> ReqRev["要求レビュー<br>(Requirements Reviewer)"]
+    UserReq["人間からの要求"] --> Req["ステップ1: 要求定義<br>(Requirements Engineer)"]
+    Req --- ReqDoc[("要求仕様書")]
+    Req -->|要求仕様書| UserReq
+    Req --> ReqRev["要求レビュー<br>(Requirements Reviewer)"]
     ReqRev -- 修正・洗練 --> Req
     ReqRev --> ReqHum["人間によるレビュー<br>(User Review)"]
     ReqHum -- 修正依頼 --> Req
     ReqHum --> Arch["ステップ2: アーキテクチャ設計<br>(Architect)"]
     
+    Arch --- ArchDoc[("アーキテクチャ設計書")]
     Arch --> ArchRev["設計レビュー<br>(Architecture Reviewer)"]
     ArchRev -- 修正・洗練 --> Arch
     ArchRev --> ArchHum["人間によるレビュー<br>(User Review)"]
     ArchHum -- 修正依頼 --> Arch
     ArchHum --> Impl["ステップ3: 実装<br>(Programmer)"]
     
+    Impl --- ProgDoc[("プログラム")]
     Impl --> ImplRev["実装レビュー<br>(Code Reviewer)"]
     ImplRev -- 修正・洗練 --> Impl
     Impl --> Arch
     ImplRev --> Test["ステップ4: テスト<br>(Test Engineer)"]
     
+    Test --- TestDoc[("総合テスト仕様書・報告書")]
     Test --> TestRev["テストレビュー<br>(Test Reviewer)"]
     TestRev -- 修正・洗練 --> Test
     Test -- 修正依頼 --> Impl
@@ -46,11 +52,28 @@ graph TD
     
     TestRev --> Approve["人間による最終評価・承認"]
     Approve -->|フィードバック| Req
+
+    %% スタイル定義 (背景色を尊重し、枠線で役割を完結)
+    classDef human fill:#333333,stroke:#ff0000,stroke-width:4px,color:#ffffff;
+    classDef agent fill:#333333,stroke:#FFFFFF,stroke-width:1px,color:#ffffff;
+    classDef doc fill:#333333,stroke:#2e7d32,stroke-width:2px,color:#ffffff;
+    
+    class UserReq,ReqHum,ArchHum,Approve human;
+    class Req,ReqRev,Arch,ArchRev,Impl,ImplRev,Test,TestRev agent;
+    class ReqDoc,ArchDoc,ProgDoc,TestDoc doc;
+
+    %% 凡例 (小型化)
+    subgraph Legend ["凡例"]
+        direction TB
+        L1["AI"]:::agent
+        L2["人"]:::human
+        L3[("成果物")]:::doc
+    end
 ```
 
 - **コード先行の絶対禁止**: まず「要求」と「設計」をドキュメントで合意し、その後にコードを実装します。
-- **自律的品質担保**: 各工程で専門レビュアー（Reviewers）が ASDoQ 文書品質モデルに基づき厳格に審査します。
 - **エージェントによる自律的な改善**: 実装やテストの工程において、エージェントは自律的にプログラムの改訂やデバッグを行います。この際、根本的な解決のために設計の見直しが必要と判断した場合、エージェントは自律的にアーキテクチャ設計工程（ステップ2）へ戻り、設計書を更新した上で、再び実装・テストを進めます。
+- **自律的品質担保**: 各工程で専門レビュアー（Reviewers）が ASDoQ 文書品質モデルに基づき厳格に審査します。
 
 ---
 
