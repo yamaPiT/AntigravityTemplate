@@ -22,17 +22,35 @@
 
 ```mermaid
 graph TD
-    subgraph "V-Model (DADA Process)"
-        Req["ステップ1: 要求定義<br>(Requirements Engineer)"] --> Arch["ステップ2: アーキテクチャ設計<br>(Architect)"]
-        Arch --> Impl["ステップ3: 実装<br>(Programmer)"]
-        Impl --> Test["ステップ4: テスト<br>(Test Engineer)"]
-        Test -.-> Review["ステップ1〜4: 専門レビュアー<br>(Reviewers)"]
-    end
-    Review --> Approve["人間による最終評価・承認"]
+    Req["ステップ1: 要求定義<br>(Requirements Engineer)"] --> ReqRev["要求レビュー<br>(Requirements Reviewer)"]
+    ReqRev -- 修正・洗練 --> Req
+    ReqRev --> ReqHum["人間によるレビュー<br>(User Review)"]
+    ReqHum -- 修正依頼 --> Req
+    ReqHum --> Arch["ステップ2: アーキテクチャ設計<br>(Architect)"]
+    
+    Arch --> ArchRev["設計レビュー<br>(Architecture Reviewer)"]
+    ArchRev -- 修正・洗練 --> Arch
+    ArchRev --> ArchHum["人間によるレビュー<br>(User Review)"]
+    ArchHum -- 修正依頼 --> Arch
+    ArchHum --> Impl["ステップ3: 実装<br>(Programmer)"]
+    
+    Impl --> ImplRev["実装レビュー<br>(Code Reviewer)"]
+    ImplRev -- 修正・洗練 --> Impl
+    Impl --> Arch
+    ImplRev --> Test["ステップ4: テスト<br>(Test Engineer)"]
+    
+    Test --> TestRev["テストレビュー<br>(Test Reviewer)"]
+    TestRev -- 修正・洗練 --> Test
+    Test -- 修正依頼 --> Impl
+    Test -- 設計変更依頼 --> Arch
+    
+    TestRev --> Approve["人間による最終評価・承認"]
+    Approve -->|フィードバック| Req
 ```
 
 - **コード先行の絶対禁止**: まず「要求」と「設計」をドキュメントで合意し、その後にコードを実装します。
 - **自律的品質担保**: 各工程で専門レビュアー（Reviewers）が ASDoQ 文書品質モデルに基づき厳格に審査します。
+- **エージェントによる自律的な改善**: 実装やテストの工程において、エージェントは自律的にプログラムの改訂やデバッグを行います。この際、根本的な解決のために設計の見直しが必要と判断した場合、エージェントは自律的にアーキテクチャ設計工程（ステップ2）へ戻り、設計書を更新した上で、再び実装・テストを進めます。
 
 ---
 
