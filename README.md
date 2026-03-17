@@ -1,6 +1,6 @@
-# DADA (Document and Agent Driven Agile) 開発プロセスのテンプレート
+# Google Antigravity 向け DADA (Document and Agent Driven Agile) 開発プロセステンプレート
 
-本リポジトリは、AIエージェント（Antigravity等）と人間が高度に協調し、高品質なソフトウェアを高速に構築するための 「DADA開発プロセステンプレート」です。
+本リポジトリは、Google Antigravity 向けに最適化された、AIエージェントと人間が高度に協調し、高品質なソフトウェアを高速に構築するための 「DADA開発プロセステンプレート」です。
 
 従来のagent codingでは、次の2点の弱点がありました。
 #### (1)「一時メモリ」で消えてしまう性質（揮発性）
