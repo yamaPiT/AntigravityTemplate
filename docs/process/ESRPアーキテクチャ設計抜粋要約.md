@@ -1,4 +1,11 @@
-
+---
+type: reference_document
+process_phase: SWP2_Tasks
+document_id: ESPR_Process_Definition_SWP2_Tasks
+role_target: [Requirements_Agent, Reviewer_Agent]
+source: 独立行政法人情報処理推進機構（IPA） ESPR改訂版
+note: SWP2（ソフトウェアアーキテクチャ設計）の具体的な各タスクの実施内容と留意事項。エージェントがアーキテクチャ設計タスクを実行・検証する際のルールとして機能する。
+---
 # SWP: ソフトウェア・エンジニアリング・プロセス
 
 [cite_start]ソフトウェア・エンジニアリング・プロセスは、組込みソフトウェア開発に関する作業の中でも、直接ものづくりに関係するソフトウェアとしての要求定義からソフトウェア総合テストまでの作業を定義しています。[cite: 967]

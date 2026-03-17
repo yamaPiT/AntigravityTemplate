@@ -1,3 +1,11 @@
+---
+type: reference_document
+process_phase: SWP1_Tasks
+document_id: ESPR_Process_Definition_SWP1_Tasks
+role_target: [Requirements_Agent, Reviewer_Agent]
+source: 独立行政法人情報処理推進機構（IPA） ESPR改訂版
+note: SWP1（ソフトウェア要求定義）の具体的な各タスクの実施内容と留意事項。エージェントが要求定義タスクを実行・検証する際のルールとして機能する。
+---
 
 # SWP: ソフトウェア・エンジニアリング・プロセス
 

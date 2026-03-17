@@ -1,3 +1,12 @@
+---
+title: ADAプロセス ドキュメント作成ガイドライン
+file_path: docs/process/ada_document_guidelines.md
+version: 1.0
+date: 2026-03-17
+author: マサ
+description: VoiceNavi開発を含むADA (Agent-Driven Agile) プロセスにおいて、AIエージェントが開発ドキュメント（SRS、アーキテクチャ設計書、統合テスト仕様書）を作成・更新するための軽量なルールブック。
+---
+
 # ADAプロセス ドキュメント作成ガイドライン
 
 ## 1. 目的と適用範囲

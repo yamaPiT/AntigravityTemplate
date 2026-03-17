@@ -1,3 +1,12 @@
+---
+title: AIエージェントとの協調開発ガイド (Agent-In-The-Loop Development)
+file_path: docs/agent_development_guide.md
+version: 1.0
+date: 2026-03-17
+author: マサ
+description: AIエージェント（Antigravity等）と開発者（人間）が協調してソフトウェアを構築・保守するためのベストプラクティスと心構えをまとめた学習教材・ガイドライン。
+---
+
 # AIエージェントとの協調開発ガイド (Agent-In-The-Loop Development)
 
 本ドキュメントは、「OSDVIスマートシナリオプロトタイプシステム (Smart Scene Simulator)」を題材として、**AIエージェント（Antigravity等）と開発者（人間）がいかに協調してソフトウェアを構築・保守していくか**のベストプラクティスをまとめた学習教材です。

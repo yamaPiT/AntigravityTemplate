@@ -1,3 +1,12 @@
+---
+title: ASDoQ システム開発文書品質モデル (Ver. 2.0a-3)
+file_path: docs/asdoq_model_markdown.md
+version: 2.0a-3
+date: 2026-03-17
+author: システム開発文書品質研究会（ASDoQ） / 導入・構成: マサ
+description: プロジェクト内のすべての成果物（要求仕様書、設計書など）の品質を担保するための、ASDoQシステム開発文書品質モデルに基づく評価基準。Agent-Driven Agileプロセスにおいて、AIエージェントが文書生成およびセルフレビューを行う際の絶対的な準拠ガイドラインとなる。
+---
+
 # システム開発文書品質モデル Ver. 2.0a-3
 **発行元**: システム開発文書品質研究会（ASDoQ）
 
