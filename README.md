@@ -1,15 +1,28 @@
-# Antigravity 開発用ワークスペーステンプレート (Agentic V-Model)
+# DADA (Document and Agent Driven Agile) 開発プロセスのテンプレート
 
-本リポジトリは、AIエージェント（Antigravity等）と人間（Masa）が高度に協調し、高品質なソフトウェアを高速に構築するための **「Agentic V字モデル」標準開発テンプレート** です。
+本リポジトリは、AIエージェント（Antigravity等）と人間が高度に協調し、高品質なソフトウェアを高速に構築するための 「DADA開発プロセステンプレート」です。
+
+従来のagent codingでは、次の2点の弱点がありました。
+#### (1)「一時メモリ」で消えてしまう性質（揮発性）
+会話により生成した要求仕様や設計などは、「コンテキストウィンドウ」と呼ばれる一時メモリ上に置かれるので、対話が進んだり新しいタスクに移ったりすると、古い情報から押し出されて消えます。だから、整合性を保つシステム開発が困難でした。
+#### (2)システム側の「ハードコーディング」
+一時メモリから消えることを防止するために、システムは、「実装計画（Implementation_plan.md）」と「手順書（walkthrough.md）」を作り、ファイルとして記録します。しかし、システム側の都合で作られる内容に過ぎず、ユーザの制御ができません。
+
+**そこで、DADA (Document and Agent Driven Agile) 開発プロセスを提案します。DADAプロセスは、ドキュメント中心主義をとります。**
+- ユーザの要求を逐次、要求仕様書に反映する。
+- 更新された要求仕様書に基づき、アーキテクチャ設計書を作成する。これにより、アーキテクチャは、常に最適化されている。
+- アーキテクチャ設計書に基づいて、プログラムを作成する。デバッグは自動で行われるが、設計変更が必要な場合は、アーキテクチャ設計書が更新される。
+- テスト仕様とテスト実行結果は、総合テスト仕様書・報告書にまとめられる。
+
+ドキュメント中心主義で開発を進めることで、agent codingの質が高まることが期待できます。
 
 ---
 
-## 1. コンセプト：ADA (Agent-Driven Agile) プロセス
-本プロジェクトの核心は、AIが単なるコード生成器ではなく、各工程の「専門家」として振る舞う **ADAプロセス** です。
+## 1. コンセプト：DADA プロセス
 
 ```mermaid
 graph TD
-    subgraph "V-Model (ADA Process)"
+    subgraph "V-Model (DADA Process)"
         Req["ステップ1: 要求定義<br>(Requirements Engineer)"] --> Arch["ステップ2: アーキテクチャ設計<br>(Architect)"]
         Arch --> Impl["ステップ3: 実装<br>(Programmer)"]
         Impl --> Test["ステップ4: テスト<br>(Test Engineer)"]
@@ -39,7 +52,7 @@ graph TD
 新機能の追加や修正を行う際は、以下の流れでコマンドを起動してください。
 
 1. **ワークフローの起動**: 
-   チャット欄で `/ADA-Process` を入力・実行します。
+   チャット欄で `/DADA-Process` を入力・実行します。
 2. **要求の提示**: 
    `requirements-engineer` と対話し、要求仕様書をドラフトします。
 3. **自律的進行**: 
@@ -51,18 +64,36 @@ graph TD
 
 ## 4. 高度な運用シナリオ
 ### トークン最適化と規格準拠のハイブリッド
-AIエージェントは通常、軽量な [ドキュメント構成ガイドライン](docs/process/ada_document_guidelines.md) に基づきスピーディーに動作します。ただし、「根本的なレビューをお願いします」という指示があった場合に限り、`docs/process/` 内の重厚なPDF規格資料（ESPR, IEEE等）を読み込み、極めて厳格な品質基準に立ち戻って作業を再構築します。
+AIエージェントは通常、軽量な [ドキュメント構成ガイドライン](docs/process/dada_document_guidelines.md) に基づきスピーディーに動作します。ただし、「根本的なレビューをお願いします」という指示があった場合に限り、`docs/process/` 内の重厚なPDF規格資料（ESPR, IEEE等）を読み込み、極めて厳格な品質基準に立ち戻って作業を再構築します。
 
 ### 既存資産の移行
 既存の仕様書やコードがある場合は、`doc/` および `src/` フォルダへ配置し、エージェントに「既存資産を理解して差分開発を開始して」と指示してください。
 
 ---
 
-## 5. 開発環境とツール
-- **Mermaid図の表示**: VS CodeやCursorで図表を美しく表示するために [Markdown Preview Mermaid Support](https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced) の導入を推奨します。
-- **相対パスの徹底**: 本テンプレート内の全ての参照は相対パス化されており、どのディレクトリに配置しても、フォルダ名を変更しても、即座に動作可能です。
+## 6. カスタマイズ：名称と役割の設定
+本テンプレートでは、便宜上、人間に **「マサ（Product Owner）」**、AIエージェントに **「ハル（Technical Partner）」** という名称を付与しています。
+
+他プロジェクトや組織で本テンプレートを使用する際は、以下のいずれかの対応を推奨します。
+
+-   **(1) 名称の変更**: 
+    以下のファイルに記述されている「マサ」「ハル」を、実際のプロジェクトメンバー名や任意の愛称に一括置換してください。
+    - [`.cursor/rules/project-rules.mdc`](.cursor/rules/project-rules.mdc)
+    - [`.agents/skills/`](.agents/skills/) 配下の各 `SKILL.md`
+    - [`docs/process/dada_document_guidelines.md`](docs/process/dada_document_guidelines.md)
+    - [`docs/asdoq_model_markdown.md`](docs/asdoq_model_markdown.md)
+    - [`docs/agent_development_guide.md`](docs/agent_development_guide.md)
+    - [`README.md`](README.md)
+-   **(2) 固有名詞の排除**: 
+    「マサ」を「Product Owner / User」に、「ハル」を「AI Assistant / Agent」に置き換えることで、よりニュートラルな運用が可能です。
+
+---
+
+## 7. 開発環境とツール
+-   **Mermaid図の表示**: VS CodeやCursorで図表を美しく表示するために [Markdown Preview Mermaid Support](https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced) の導入を推奨します。
+-   **相対パスの徹底**: 本テンプレート内の全ての参照は相対パス化されており、どのディレクトリに配置しても、フォルダ名を変更しても、即座に動作可能です。
 
 ---
 
 > [!NOTE]
-> あなたのパートナーである「ハル」は、このプロジェクトのルールとスキルを常に読み込んでいます。技術的な矛盾があれば率直に提案しますので、対話を通じて最高のプロダクトを作り上げましょう。
+> あなたのパートナーであるAIエージェントは、このプロジェクトのルールとスキルを常に読み込んでいます。技術的な矛盾があれば率直に提案しますので、対話を通じて最高のプロダクトを作り上げましょう。
