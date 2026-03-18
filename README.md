@@ -22,6 +22,7 @@
 
 ```mermaid
 graph TD
+    Start(["開始"]) --> UserReq["人間からの要求"]
     UserReq["人間からの要求"] --> Req["ステップ1: 要求定義<br>(Requirements Engineer)"]
     Req --- ReqDoc[("要求仕様書")]
     Req -->|要求仕様書| UserReq
@@ -50,17 +51,20 @@ graph TD
     Test -- 修正依頼 --> Impl
     Test -- 設計変更依頼 --> Arch
     
-    TestRev --> Approve["人間による最終評価・承認"]
+    TestRev --> Approve["人間による最終評価・終了"]
     Approve -->|フィードバック| Req
+    Approve --> End(["終了"])
 
     %% スタイル定義 (背景色を尊重し、枠線で役割を完結)
     classDef human fill:#333333,stroke:#ff0000,stroke-width:4px,color:#ffffff;
     classDef agent fill:#333333,stroke:#FFFFFF,stroke-width:1px,color:#ffffff;
     classDef doc fill:#333333,stroke:#2e7d32,stroke-width:2px,color:#ffffff;
+    classDef startEnd fill:#333333,stroke:#ffffff,stroke-width:2px,color:#ffffff;
     
     class UserReq,ReqHum,ArchHum,Approve human;
     class Req,ReqRev,Arch,ArchRev,Impl,ImplRev,Test,TestRev agent;
     class ReqDoc,ArchDoc,ProgDoc,TestDoc doc;
+    class Start,End startEnd;
 
     %% 凡例 (小型化)
     subgraph Legend ["凡例"]
@@ -69,11 +73,12 @@ graph TD
         L2["人"]:::human
         L3[("成果物")]:::doc
     end
+
 ```
 
 - **コード先行の絶対禁止**: まず「要求」と「設計」をドキュメントで合意し、その後にコードを実装します。
 - **エージェントによる自律的な改善**: 実装やテストの工程において、エージェントは自律的にプログラムの改訂やデバッグを行います。この際、根本的な解決のために設計の見直しが必要と判断した場合、エージェントは自律的にアーキテクチャ設計工程（ステップ2）へ戻り、設計書を更新した上で、再び実装・テストを進めます。
-- **自律的品質担保**: 各工程で専門レビュアー（Reviewers）が ASDoQ 文書品質モデルに基づき厳格に審査します。
+- **自律的かつ統合された自己品質担保 (Self-Correction)**: トークン消費と処理時間を最小化するため、明示的な別エージェント（Reviewers）を都度呼び出すのではなく、作業エージェント自身が瞬時に「専門レビュアー」のペルソナへ切り替わり、ASDoQ文書品質モデルに基づく自己校正を自律的・高速に行います。図上のレビュアーは、このシステム内の「自己レビュープロセス」を表現しています。
 
 ---
 
