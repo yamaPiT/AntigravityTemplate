@@ -1,5 +1,8 @@
 # Google Antigravity 専用 DADA プロセステンプレート 🤖📝
 
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/yamaPiT/AntigravityTemplate?label=最新バージョン)
+![GitHub last commit](https://img.shields.io/github/last-commit/yamaPiT/AntigravityTemplate?label=最終更新)
+
 本リポジトリは、**Google Antigravity** 上でAIエージェントと人間が高度に協調し、高品質なソフトウェアを「ドキュメント駆動」で高速に構築するために最適化された専用の開発プロセステンプレートです。Antigravityの強力なスキル連携やワークフロー機能を最大限に引き出せるよう設計されています。
 
 ## 💥 従来のAgentic Codingの限界とDADAが提供する解決策
@@ -178,3 +181,5 @@ Antigravityエージェントから最大のパフォーマンス（高品質と
 
 > [!NOTE]
 > あなたのパートナーであるAIエージェントは、このプロジェクトのルールとスキルを状況に応じて自律的に読み込んで動作します。技術的な矛盾やアーキテクチャの懸念があれば、AIが率直に意見・提案を行いますので、対話を通じて最高のプロダクトを作り上げましょう。
+> バージョン管理について:
+> 本テンプレートを用いて作成した独自プロジェクトでは、Gitの tag 機能を活用して v1.0.0 のように版数を管理することを推奨します。これにより、DADAプロセスによる開発の節目を明確に記録できます。
