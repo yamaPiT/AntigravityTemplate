@@ -144,8 +144,9 @@ graph TD
 | ディレクトリ | 役割 | 主な内容 |
 | :--- | :--- | :--- |
 | [`.agents/`](.agents/) | **エージェントの脳** | 工程別の専門スキル (`skills/`) 、ペルソナ (`roles/`) と標準手順書 (`workflows/DADA-Process.md`) |
-| [`docs/`](docs/) | **ナレッジ・ベース** | ドキュメントテンプレート (`templates/`)、ASDoQ品質モデル等の作業ガイドライン (`guidelines/`) |
-| [`docs/artifact/`](docs/artifact/) | **開発成果物** | 人間が確認・承認するドキュメント (SW105要求仕様書、SW205設計書、SWP6テスト報告書等) |
+| [`docs/guidelines/`](docs/guidelines/) | **作業ガイドライン** | ドキュメントの基本フォーマット (`dada_document_guidelines.md`) やASDoQ品質モデル等。通常はこれに従います。 |
+| [`docs/templates/`](docs/templates/) | **開発文書ひな形** | 企業等で定められた目次形式。**人間が明示的にこのフォルダのひな形（例: IEEE29148準拠など）を指示した場合に限り、ガイドラインよりこちらの目次構造を優先**します。 |
+| [`docs/artifact/`](docs/artifact/) | **開発成果物** | 人間が確認・承認するドキュメント (要求仕様書、設計書、テスト報告書等) |
 
 ### スキル・ロール一覧
 

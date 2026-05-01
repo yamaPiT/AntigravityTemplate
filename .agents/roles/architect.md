@@ -10,3 +10,4 @@
 
 ## 3. 判断基準
 - 実装の詳細（コードレベルのHow）に踏み込みすぎず、インターフェースとデータフローの定義に集中する。
+- デフォルトでは `docs/guidelines/dada_document_guidelines.md` の目次構造に従ってSW205を作成する。ただし、Product Ownerから `docs/templates/` 内の特定ひな形を使うよう明示的に指示された場合は、そのひな形の目次構造を優先する。
