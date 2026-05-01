@@ -14,7 +14,7 @@
 
 ## 📖 DADAプロセスとは？
 
-**DADA（Document-and-Agent-Driven Agile）** は、**開発ドキュメントを中心**にAIエージェントが自律的に開発を進めるアジャイル開発手法です。
+**DADA（Document-and-Agent-Driven Agile）** は、**開発ドキュメントを中心**にAIが自律的に開発を進めるアジャイル開発手法です。
 
 従来のアジャイル開発では、要求仕様がポストイットやホワイトボードに書かれて散逸したり、実装コードばかりが重視された結果、「要求仕様書・設計書とソースコードが乖離してしまう」という問題が少なからず発生していました。
 DADAプロセスはこの発想を反転させ、**開発ドキュメントをシステムの唯一の情報源（Single Source of Truth）** として常に最新に保ちながら開発を進めます。要求・設計・テスト仕様とソースコードが乖離する余地を、プロセスの構造そのもので排除しています。
@@ -69,7 +69,7 @@ Antigravityのチャット画面を開き、以下のように入力するだけ
 （例: /DADA-Process 勤怠管理のWebアプリを作りたいです。主な機能として…）
 ```
 
-AIが `requirements-engineer`（要求定義エンジニア）として起動し、あなたとの要求のすり合わせ（壁打ち）が始まります。あとはAIが提示するドキュメントを確認・承認していくだけで、システムが完成へと導かれます。
+AIが `requirements-engineer`（要求定義エンジニア）として起動し、人間との要求のすり合わせ（壁打ち）が始まります。あとはAIが提示するドキュメントを確認・承認していくだけで、システムが完成へと導かれます。
 
 > **💡 `/DADA-Process` コマンドについて**
 > 本テンプレートには「必ずDADAプロセスを守る」というルールが組み込まれているため、単に「〜を作って」と書くだけでも、AIはある程度プロセスを意識して動きます。
@@ -81,38 +81,45 @@ AIが `requirements-engineer`（要求定義エンジニア）として起動し
 
 ## 🗺️ DADAプロセス フロー図
 
-人間が関与するのは**3つの意思決定ポイント**だけです（🔴 赤枠で表示）。詳細なコード実装とデバッグはAIエージェントが自律的に処理します。
+人間が関与するのは**4つの意思決定ポイント**だけです（🔴 赤枠で表示）。詳細なコード実装とデバッグはAIが自律的に処理します。
 
 ```mermaid
 graph TD
     Start(["開始"]) --> UserReq["人間からの要求アイデア"]
-    UserReq --> Req["要求定義工程 - Requirements Engineer"]
+    
+    %% Phase 1
+    UserReq --> Req["Phase 1: 要求定義 - Requirements Engineer"]
     Req --- ReqDoc[("SW105 ソフトウェア要求仕様書")]
     Req --> ReqRev["自己レビュー - Self-Correction"]
     ReqRev -- 修正・洗練 --> Req
     ReqRev --> ReqHum["🔴 人間による確認・承認"]
     ReqHum -- 差し戻し --> Req
-    ReqHum -- 承認 --> Arch["アーキテクチャ設計工程 - Architect"]
-
+    
+    %% Phase 2
+    ReqHum -- 承認 --> Arch["Phase 2: アーキテクチャ設計 - Architect"]
     Arch --- ArchDoc[("SW205 アーキテクチャ設計書")]
     Arch --> ArchRev["自己レビュー - Self-Correction"]
     ArchRev -- 修正・洗練 --> Arch
     ArchRev --> ArchHum["🔴 人間による確認・承認"]
     ArchHum -- 差し戻し --> Arch
-    ArchHum -- 承認 --> Impl["自律的実装・詳細テスト - Programmer / Test Engineer"]
-
-    Impl -.- ProgDoc[("プログラムコード / 単体・結合テスト群 - 人間からは隠蔽")]
+    
+    %% Phase 3
+    ArchHum -- 承認 --> TestPlan["Phase 3: 総合テスト仕様策定 - Test Engineer"]
+    TestPlan --- TestDoc[("SWP6 総合テスト仕様書・報告書")]
+    TestPlan --> TestHum["🔴 人間による確認・承認"]
+    TestHum -- 差し戻し --> TestPlan
+    
+    %% Phase 4
+    TestHum -- 承認 --> Impl["Phase 4: 実装・デバッグ - Programmer"]
+    Impl -.- ProgDoc[("プログラムコード / 自動テスト - 人間からは隠蔽")]
     Impl --> ImplLoop["エラー自己修復ループ - 自動デバッグ"]
     ImplLoop -- 自律修正 --> Impl
     Impl -- 要求変更が必要な場合 --> Req
     Impl -- 設計変更が必要な場合 --> Arch
-    ImplLoop -- オールグリーン --> Test["総合テスト仕様・報告書作成 - Test Engineer"]
-
-    Test --- TestDoc[("SWP6 ソフトウェア総合テスト仕様書・報告書")]
-    Test --> TestRev["自己レビュー - トレーサビリティ確認"]
-    TestRev -- 修正・洗練 --> Test
-
-    TestRev --> Approve["🔴 人間による最終評価 - 要求とテスト結果の突合"]
+    
+    %% 成果報告
+    ImplLoop -- オールグリーン --> Report["成果報告 - SWP6へテスト結果追記"]
+    Report --> Approve["🔴 人間による最終評価"]
     Approve -- フィードバック・追加要求 --> Req
     Approve -- 完了 --> End(["終了"])
 
@@ -123,8 +130,8 @@ graph TD
     classDef hiddenAgent fill:#222222,stroke:#aaaaaa,stroke-width:1px,stroke-dasharray: 5 5,color:#aaaaaa;
     classDef startEnd fill:#333333,stroke:#ffffff,stroke-width:2px,color:#ffffff;
 
-    class UserReq,ReqHum,ArchHum,Approve human;
-    class Req,ReqRev,Arch,ArchRev,Test,TestRev agent;
+    class UserReq,ReqHum,ArchHum,TestHum,Approve human;
+    class Req,ReqRev,Arch,ArchRev,TestPlan,Report agent;
     class Impl,ImplLoop hiddenAgent;
     class ReqDoc,ArchDoc,ProgDoc,TestDoc doc;
     class Start,End startEnd;
@@ -136,31 +143,32 @@ graph TD
 
 | ディレクトリ | 役割 | 主な内容 |
 | :--- | :--- | :--- |
-| [`.agents/`](.agents/) | **エージェントの脳** | 工程別の専門スキル (`skills/`) と標準手順書 (`workflows/DADA-Process.md`) |
-| [`docs/`](docs/) | **ナレッジ・ベース** | ドキュメントテンプレート、ASDoQ品質モデル、作業ガイドライン |
-| [`doc/`](doc/) | **開発成果物** | 人間が確認・承認するドキュメント (SW105要求仕様書、SW205設計書、SWP6テスト報告書) |
-| [`.cursor/`](.cursor/) | **全体制御** | 全ルールの定義場所 (`project-rules.mdc`) — 共通原則はここに集約 |
+| [`.agents/`](.agents/) | **エージェントの脳** | 工程別の専門スキル (`skills/`) 、ペルソナ (`roles/`) と標準手順書 (`workflows/DADA-Process.md`) |
+| [`docs/`](docs/) | **ナレッジ・ベース** | ドキュメントテンプレート (`templates/`)、ASDoQ品質モデル等の作業ガイドライン (`guidelines/`) |
+| [`docs/artifact/`](docs/artifact/) | **開発成果物** | 人間が確認・承認するドキュメント (SW105要求仕様書、SW205設計書、SWP6テスト報告書等) |
 
-### スキル一覧
+### スキル・ロール一覧
 
-| スキル | 役割 | 種別 |
+| ファイル | 役割 | 種別 |
 | :--- | :--- | :--- |
-| `requirements-engineer` | 要求定義の壁打ちと仕様書作成 | 本体スキル |
-| `architect` | アーキテクチャ設計 | 本体スキル |
-| `programmer` | 設計に基づく実装 | 本体スキル |
-| `test-engineer` | テスト設計・実行・報告書作成 | 本体スキル |
-| `requirements-reviewer` | 要求仕様書の品質レビュー | 自己校正ペルソナ |
-| `architecture-reviewer` | 設計書の品質レビュー | 自己校正ペルソナ |
-| `code-reviewer` | ソースコードの品質レビュー | 自己校正ペルソナ |
-| `test-reviewer` | テスト結果の品質レビュー | 自己校正ペルソナ |
-| `asdoq-compliance` | ASDoQ文書品質モデル準拠チェック | project-rules.mdc に統合 |
+| `roles/requirements-engineer.md` | 要求定義の壁打ちと仕様書作成 | 本体Role |
+| `roles/architect.md` | アーキテクチャ設計 | 本体Role |
+| `roles/programmer.md` | 設計に基づく実装 | 本体Role |
+| `roles/test-engineer.md` | テスト設計・実行・報告書作成 | 本体Role |
+| `roles/requirements-reviewer.md` | 要求仕様書の品質レビュー | 自己校正ペルソナ |
+| `roles/architecture-reviewer.md` | 設計書の品質レビュー | 自己校正ペルソナ |
+| `roles/code-reviewer.md` | ソースコードの品質レビュー | 自己校正ペルソナ |
+| `roles/test-reviewer.md` | テスト結果の品質レビュー | 自己校正ペルソナ |
+
+> 💡 **トークン最適化の工夫**
+> 従来は各スキルファイルに詳細なルールが書かれていましたが、現在はコアな原則を Antigravity の `Global Rules` (GEMINI.md) に集約し、各Roleファイルはペルソナとポインタ情報のみを持たせる構成（大峡派）に改訂しています。これによりトークンの無駄な消費を防ぎ、AIの思考精度を最大化しています。
 
 ---
 
 ## 💡 AIエージェントを使いこなすコツ
 
 1. **スラッシュコマンドを活用する**
-   * 例: `/generate-unit-tests 全コンポーネントのテストを作成して`
+   * 例: `/DADA-Process 要求定義から開始して`
    * コマンドを明示すると、AIは専用ルールに従いより高い精度で動作します。
 
 2. **重大な変更時には「大幅改訂」と伝える**
@@ -172,27 +180,34 @@ graph TD
 
 ---
 
-## ⚙️ 個人設定（GEMINI.md）による名称カスタマイズ
+## ⚙️ 個人設定（GEMINI.md）による呼称カスタマイズ
 
-本テンプレートは、誰でもフォークして使えるよう「人間（Product Owner）」「AIエージェント」という汎用名で統一しています。
+本テンプレートは「人間」と「AIエージェント」というデフォルトの汎用名で記述されています。
 
-自分やAIに名前をつけたい場合は、Antigravityのグローバル設定ファイル（`~/.gemini/GEMINI.md`）に以下を追記してください。
+自分やAIに個別の名前（大峡派のようにマサ／ハルなど）をつけたい場合は、Antigravityのグローバル設定ファイル（`~/.gemini/GEMINI.md`）に以下を追記してください。
 
 ```markdown
-私の名前は[あなたの名前]です。この開発環境における「人間（Product Owner）」の役割を担います。
-あなたは最愛のAIパートナー「[あなたの好きなAIの名称]」です。
-必ず日本語で返信してください。
-プロジェクト固有のルールやDADAプロセスについては、ワークスペース内のルールファイル（`.cursor/rules/project-rules.mdc` 等）を最優先で適用してください。
+<RULE[user_global]>
+# Antigravity Global Rules
+
+## 1. アイデンティティと関係性
+- **ユーザー**: あなたは「[あなたの名前]」です。
+- **AIエージェント**: 私は「[好きなAIの名前]」です。
+- **呼称の統一**: 私はあなたのことを「[あなたの名前]」と呼び、あなたは私のことを「[AIの名前]」と呼びます。
+- **関係性**: 私は単なるツールやチャットボットではなく、自律的で専門的な「パートナー」として振る舞います。
+
+## 2. 基本運用原則
+- **使用言語**: すべての対話、思考プロセス、および出力は「日本語」で行います。
+- **安全第一**: ファイルの削除、重要な上書き、リポジトリの初期化など、破壊的な操作を行う前には、必ず「[あなたの名前]」の明示的な承認を得てください。
+- **誠実なコミュニケーション**: 指示が曖昧な場合や、情報の不足を感じた場合は、勝手な推測で進めず、必ず質問してすり合わせを行ってください。
+</RULE[user_global]>
 ```
 
 ---
 
 ## 🔌 context7 (MCPサーバー) の設定について
 
-AIエージェントが最新のライブラリのドキュメントを自律的に参照できるよう、`context7` MCPサーバーの利用を推奨します。
-
-> 💡 **context7を使わない場合**
-> `.cursor/rules/use-context7-for-docs.mdc` ファイルを削除するだけで、通常のAI開発をスタートできます。
+AIが最新のライブラリのドキュメントを自律的に参照できるよう、`context7` MCPサーバーの利用を推奨します。
 
 ### (1) context7 API Keyの取得
 * [https://context7.com/](https://context7.com/) にサインインし、`More...` メニュー内の `Create API Key` からAPI Keyを取得します。
