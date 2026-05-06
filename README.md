@@ -114,14 +114,15 @@ graph TD
     Impl -.- ProgDoc[("プログラムコード / 自動テスト - 人間からは隠蔽")]
     Impl --> ImplLoop["エラー自己修復ループ - 自動デバッグ"]
     ImplLoop -- 自律修正 --> Impl
-    Impl -- 要求変更が必要な場合 --> Req
-    Impl -- 設計変更が必要な場合 --> Arch
+    Impl -- 🔴 設計変更が必要な場合 --> Arch
     
-    %% 成果報告
+    %% Phase 5: 成果報告と評価
     ImplLoop -- オールグリーン --> Report["成果報告 - SWP6へテスト結果追記"]
-    Report --> Approve["🔴 人間による最終評価"]
-    Approve -- フィードバック・追加要求 --> Req
-    Approve -- 完了 --> End(["終了"])
+    Report --> Eval["Phase 5: 人間による評価と要求見直し"]
+    Eval --> Eval1["🔴 AIテスト結果の確認と補足 (手動テスト・SWP6追記)"]
+    Eval1 --> Eval2["🔴 動作を踏まえた要求仕様の変更検討"]
+    Eval2 -- 変更あり (ループバック) --> Req
+    Eval2 -- 変更なし (最終承認) --> End(["終了"])
 
     %% スタイル定義
     classDef human fill:#333333,stroke:#ff0000,stroke-width:4px,color:#ffffff;
@@ -130,8 +131,8 @@ graph TD
     classDef hiddenAgent fill:#222222,stroke:#aaaaaa,stroke-width:1px,stroke-dasharray: 5 5,color:#aaaaaa;
     classDef startEnd fill:#333333,stroke:#ffffff,stroke-width:2px,color:#ffffff;
 
-    class UserReq,ReqHum,ArchHum,TestHum,Approve human;
-    class Req,ReqRev,Arch,ArchRev,TestPlan,Report agent;
+    class UserReq,ReqHum,ArchHum,TestHum,Eval1,Eval2 human;
+    class Req,ReqRev,Arch,ArchRev,TestPlan,Report,Eval agent;
     class Impl,ImplLoop hiddenAgent;
     class ReqDoc,ArchDoc,ProgDoc,TestDoc doc;
     class Start,End startEnd;
