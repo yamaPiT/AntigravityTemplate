@@ -105,19 +105,25 @@ graph TD
     
     %% Phase 3
     ArchHum -- 承認 --> TestPlan["Phase 3: 総合テスト仕様策定 - Test Engineer"]
-    TestPlan --- TestDoc[("SWP6 総合テスト仕様書・報告書")]
-    TestPlan --> TestHum["🔴 人間による確認・承認"]
-    TestHum -- 差し戻し --> TestPlan
-    
-    %% Phase 4
-    TestHum -- 承認 --> Impl["Phase 4: 実装・デバッグ - Programmer"]
-    Impl -.- ProgDoc[("プログラムコード / 自動テスト - 人間からは隠蔽")]
-    Impl --> ImplLoop["エラー自己修復ループ - 自動デバッグ"]
-    ImplLoop -- 自律修正 --> Impl
-    Impl -- 🔴 設計変更が必要な場合 --> Arch
+    TestPlan --- TestDoc[("SWP6 総合テスト仕様書<RULE[user_global]>
+# Antigravity Global Rules (基本法)
+
+## 1. アイデンティティと関係性
+- **ユーザー**:  Product Ownerのあなたは「[あなたの名前]」です。
+- **AIエージェント**: 私は「[AIの名前]」です。
+- **呼称の統一**: 私はあなたのことを「[あなたの名前]」と呼び、あなたは私のことを「[AIの名前]」と呼びます。
+- **関係性**: 私は単なるツールやチャットボットではなく、自律的で専門的な「パートナー」として振る舞います。
+
+## 2. 基本運用原則
+- **使用言語**: すべての対話、思考プロセス、および出力は「日本語」で行います。
+- **安全第一**: ファイルの削除、重要な上書き、リポジトリの初期化など、破壊的な操作を行う前には、必ず「[あなたの名前]」の明示的な承認を得てください。
+- **誠実なコミュニケーション**: 指示が曖昧な場合や、情報の不足を感じた場合は、勝手な推測で進めず、必ず質問してすり合わせを行ってください。
+- **DADAプロセス運用時**: いかなるタスクを開始する前にも、必ず `.agents/rules/dada_workspace_rules.md` を読み、そこに書かれたDADAプロセスの原則を厳守すること。
+</RULE[user_global]>mplLoop -- オールグリーン --> CodeRev["自己レビュー - Self-Correction"]
+    CodeRev -- コード規約・品質修正 --> Impl
     
     %% Phase 5: 成果報告と評価
-    ImplLoop -- オールグリーン --> Report["成果報告 - SWP6へテスト結果追記"]
+    CodeRev -- 承認 --> Report["成果報告 - SWP6へテスト結果追記"]
     Report --> Eval["Phase 5: 人間による評価と要求見直し"]
     Eval --> Eval1["🔴 AIテスト結果の確認と補足 (手動テスト・SWP6追記)"]
     Eval1 --> Eval2["🔴 動作を踏まえた要求仕様の変更検討"]
@@ -132,8 +138,8 @@ graph TD
     classDef startEnd fill:#333333,stroke:#ffffff,stroke-width:2px,color:#ffffff;
 
     class UserReq,ReqHum,ArchHum,TestHum,Eval1,Eval2 human;
-    class Req,ReqRev,Arch,ArchRev,TestPlan,Report,Eval agent;
-    class Impl,ImplLoop hiddenAgent;
+    class Req,ReqRev,Arch,ArchRev,TestPlan,TestRev,Report,Eval agent;
+    class Impl,ImplLoop,CodeRev hiddenAgent;
     class ReqDoc,ArchDoc,ProgDoc,TestDoc doc;
     class Start,End startEnd;
 ```
@@ -144,9 +150,13 @@ graph TD
 
 | ディレクトリ | 役割 | 主な内容 |
 | :--- | :--- | :--- |
-| [`.agents/`](.agents/) | **エージェントの脳** | 工程別の専門スキル (`skills/`) 、ペルソナ (`roles/`) と標準手順書 (`workflows/DADA-Process.md`) |
+| [`.agents/roles/`](.agents/roles/) | **AIペルソナ** | 要求エンジニアやアーキテクトなど、各工程を担当するAIの役割定義 |
+| [`.agents/skills/`](.agents/skills/) | **専門スキル** | AIが特定のタスク（テスト生成など）を実行するための専門的な手順・指示 |
+| [`.agents/workflows/`](.agents/workflows/) | **標準手順書** | DADAプロセスの進行やオーケストレーションを定義するフロー手順書 |
+| [`.agents/rules/`](.agents/rules/) | **ワークフロールール** | プロジェクト固有のDADAプロセス厳守ルール (`dada_workspace_rules.md`) |
 | [`docs/guidelines/`](docs/guidelines/) | **作業ガイドライン** | ドキュメントの基本フォーマット (`dada_document_guidelines.md`) やASDoQ品質モデル等。デフォルトはこれに従います。 |
 | [`docs/templates/`](docs/templates/) | **開発文書ひな形** | IEEE29148_2018等の規格や企業独自の目次形式。**ユーザが「IEEE29148に準拠」「企業のテンプレートを使用」と明示的に指示した場合のみ、該当するひな形を読み込み優先**します。 |
+| [`docs/process/`](docs/process/) | **プロセス状態・文脈管理** | フェーズ移行時のサマリー（`last_phase_summary.md`）など、開発プロセスの状態を記録・復元し、アテンション・リセットを支えるための文書。 |
 | [`docs/artifact/`](docs/artifact/) | **開発成果物と帳票** | 人間が確認・承認するドキュメント (要求・設計・テスト仕様等)。および、**人間とAIが協働するためのレビュー記録表（`REV101`）とバグ管理表（`BUG101`）**。 |
 
 ### スキル・ロール一覧
@@ -161,6 +171,10 @@ graph TD
 | `roles/architecture-reviewer.md` | 設計書の品質レビュー | 自己校正ペルソナ |
 | `roles/code-reviewer.md` | ソースコードの品質レビュー | 自己校正ペルソナ |
 | `roles/test-reviewer.md` | テスト結果の品質レビュー | 自己校正ペルソナ |
+| `skills/context-reset/` | フェーズ移行時のコンテキスト洗浄（アテンション・リセット） | コアスキル |
+| `skills/unit-test-generator/` | 自律的なテストコード生成とデバッグ実行 | 開発支援スキル |
+| `skills/document-writer/` | 開発ドキュメントの物理的な書き出しと整合性維持 | 基盤スキル |
+| `skills/context7-mcp/` | 最新ライブラリ情報の検索とドキュメント参照 | 調査スキル |
 
 > 💡 **トークン最適化の工夫**
 > 従来は各スキルファイルに詳細なルールが書かれていましたが、現在はコアな原則を Antigravity の `Global Rules` (GEMINI.md) に集約し、各Roleファイルはペルソナとポインタ情報のみを持たせる構成（大峡派）に改訂しています。これによりトークンの無駄な消費を防ぎ、AIの思考精度を最大化しています。
@@ -199,8 +213,8 @@ graph TD
 # Antigravity Global Rules (基本法)
 
 ## 1. アイデンティティと関係性
-- **ユーザー**: あなたは「[あなたの名前]」です。
-- **AIエージェント**: 私は「[好きなAIの名前]」です。
+- **ユーザー**:  Product Ownerのあなたは「[あなたの名前]」です。
+- **AIエージェント**: 私は「[AIの名前]」です。
 - **呼称の統一**: 私はあなたのことを「[あなたの名前]」と呼び、あなたは私のことを「[AIの名前]」と呼びます。
 - **関係性**: 私は単なるツールやチャットボットではなく、自律的で専門的な「パートナー」として振る舞います。
 
@@ -208,7 +222,7 @@ graph TD
 - **使用言語**: すべての対話、思考プロセス、および出力は「日本語」で行います。
 - **安全第一**: ファイルの削除、重要な上書き、リポジトリの初期化など、破壊的な操作を行う前には、必ず「[あなたの名前]」の明示的な承認を得てください。
 - **誠実なコミュニケーション**: 指示が曖昧な場合や、情報の不足を感じた場合は、勝手な推測で進めず、必ず質問してすり合わせを行ってください。
-- **DADAプロセス運用時**: いかなるタスクを開始する前にも、必ず .agents/rules/dada_workspace_rules.md を読み、そこに書かれたDADAプロセスの4原則を厳守すること。
+- **DADAプロセス運用時**: いかなるタスクを開始する前にも、必ず `.agents/rules/dada_workspace_rules.md` を読み、そこに書かれたDADAプロセスの原則を厳守すること。
 </RULE[user_global]>
 ```
 
