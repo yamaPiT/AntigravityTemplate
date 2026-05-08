@@ -1,6 +1,6 @@
 ---
 title: DADAプロセス ドキュメント作成ガイドライン
-file_path: docs/process/dada_document_guidelines.md
+file_path: docs/guidelines/dada_document_guidelines.md
 version: 3.0
 date: 2026-05-06
 author: Product Owner
@@ -19,7 +19,7 @@ description: DADA (Document and Agent Driven Agile) プロセスにおいて、A
 ## 2. エージェントへの基本ルール（Agent Instructions）
 * **一貫性と追跡可能性:** 要求(SRS) → 設計(Arch) → テスト(Test) の間で内容に矛盾や飛躍がないこと。
 * **出力形式:** 原則としてMarkdown形式で出力し、可読性を高く保つこと。
-※ ドキュメント絶対主義、自己校正の手順、記述すべきDADAコア要件（Agentic Testability等）の詳細は、グローバルルールの `project-rules.mdc` に従うこと。
+※ ドキュメント絶対主義、自己校正の手順、記述すべきDADAコア要件（Agentic Testability等）の詳細は、`.agents/rules/dada_workspace_rules.md` に従うこと。
 
 ---
 
@@ -95,4 +95,4 @@ SW105を満たすための「静的構造」と「動的振る舞い」を定義
 ---
 
 ## 4. 自己校正のレビュー基準 (Self-Correction Criteria)
-エージェントは自律的かつ瞬時に自己精査（Self-Correction）を完結させること。レビュー時の評価基準（ASDoQ品質特性など）は、全て `project-rules.mdc` に記載されたグローバルルールに準拠する。
+エージェントは自律的かつ瞬時に自己精査（Self-Correction）を完結させること。レビュー時の評価基準は `.agents/rules/dada_workspace_rules.md` の「共通行動指針」に従い、通常は `docs/guidelines/asdoq_checklist.md`（軽量版）、詳細校正時は `docs/guidelines/asdoq_model_markdown.md`（フル版）を使用する。
