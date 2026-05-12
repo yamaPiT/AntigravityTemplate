@@ -106,27 +106,27 @@ graph TD
         Req --- ReqDoc[("SW105 ソフトウェア要求仕様書")]
         Req --> ReqRev["自己レビュー - Self-Correction"]
         ReqRev -- 修正・洗練 --> Req
+        ReqRev --> ReqHum["🔴 人間による確認・承認"]
+        ReqHum -- 差し戻し --> Req
     end
-    ReqRev --> ReqHum["🔴 人間による確認・承認"]
-    ReqHum -- 差し戻し --> Req
 
     subgraph P2 ["Phase 2: アーキテクチャ設計"]
         ReqHum -- 承認 --> Arch["Architect"]
         Arch --- ArchDoc[("SW205 アーキテクチャ設計書")]
         Arch --> ArchRev["自己レビュー - Self-Correction"]
         ArchRev -- 修正・洗練 --> Arch
+        ArchRev --> ArchHum["🔴 人間による確認・承認"]
+        ArchHum -- 差し戻し --> Arch
     end
-    ArchRev --> ArchHum["🔴 人間による確認・承認"]
-    ArchHum -- 差し戻し --> Arch
 
     subgraph P3 ["Phase 3: 総合テスト仕様策定"]
         ArchHum -- 承認 --> TestPlan["Test Engineer"]
         TestPlan --- TestDoc[("SWP6 総合テスト仕様書・報告書")]
         TestPlan --> TestRev["自己レビュー - Self-Correction"]
         TestRev -- 修正・洗練 --> TestPlan
+        TestRev --> TestHum["🔴 人間による確認・承認"]
+        TestHum -- 差し戻し --> TestPlan
     end
-    TestRev --> TestHum["🔴 人間による確認・承認"]
-    TestHum -- 差し戻し --> TestPlan
 
     subgraph P4 ["Phase 4: 実装・デバッグ"]
         TestHum -- 承認 --> Impl["Programmer - 自律実装"]
