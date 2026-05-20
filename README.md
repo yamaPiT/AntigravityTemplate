@@ -1,9 +1,17 @@
-# Google Antigravity 専用 DADA プロセステンプレート 🤖📝
+# Google Antigravity IDE 専用 DADA プロセステンプレート 🤖📝
 
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/yamaPiT/AntigravityTemplate?label=最新バージョン)
 ![GitHub last commit](https://img.shields.io/github/last-commit/yamaPiT/AntigravityTemplate?label=最終更新)
 
-本リポジトリは、**Google Antigravity** でAIエージェントと人間が協調しながら、高品質なソフトウェアを高速に構築するための **DADA（Document-and-Agent-Driven Agile）開発プロセステンプレート** です。
+本リポジトリは、**Google Antigravity IDE** でAIエージェントと人間が協調しながら、高品質なソフトウェアを高速に構築するための **DADA（Document-and-Agent-Driven Agile）開発プロセステンプレート** です。
+
+**Google Antigravity IDE** は、こちらからダウンロードしてください。https://antigravity.google/download#antigravity-ide
+
+補足：このリポジトリはAntigravity IDE（統合開発環境）で利用することを前提として開発しています。2026年6月19日にAntigravity 2.0がリリースされました。Antigravity IDEとの違いは、次の通りです。
+
+ - Antigravity IDE ：　エディタ＋エージェント統合開発環境
+ - Antigravity 2.0 ：　IDE から Agent Manager 部分だけを切り出したスタンドアロンのエージェント専用アプリ
+
 
 テンプレートを自分のリポジトリにコピーしてチャットに指示を書き込むだけで、AIが **要求定義 → 設計 → 実装 → テスト** の全工程を、ドキュメントを軸に自律的に進めてくれます。
 
