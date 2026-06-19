@@ -1,6 +1,6 @@
 ---
 title: ASDoQ システム開発文書品質モデル (Ver. 2.0a-3)
-file_path: docs/asdoq_model_markdown.md
+file_path: docs/guidelines/asdoq_model_markdown.md
 version: 2.0a-3
 date: 2026-03-17
 author: システム開発文書品質研究会（ASDoQ） / 導入・構成: Antigravity Template
