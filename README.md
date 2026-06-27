@@ -5,6 +5,10 @@
 
 本リポジトリは、**Google Antigravity IDE** でAIエージェントと人間が協調しながら、高品質なソフトウェアを高速に構築するための **DADA（Document-and-Agent-Driven Agile）開発プロセステンプレート** です。
 
+Antigravity v1時に開発しました。Antigravityは、2026年5月にv2へとバージョンアップが行われ、v1のEditorがAntigravity IDEへと名称変更・統合された構成に変更されました。その際に、エージェントをカスタマイズするWorkflow, Knowledge, Rules(グローバル)がSkillsに、Rules(ワークスペース)はAGENTS.mdに集約されました。
+
+本リポジトリは、v1のままですが、Antigravity IDEで使用するGemini 3.5 Flashの能力向上に伴い、本リポジトリのままでも期待通りの動作をすることが確認できました。v2構成への対応は追って対応予定です。
+
 **Google Antigravity IDE** は、こちらからダウンロードしてください。https://antigravity.google/download#antigravity-ide
 
 補足：このリポジトリはAntigravity IDE（統合開発環境）で利用することを前提として開発しています。2026年6月19日にAntigravity 2.0がリリースされました。Antigravity IDEとの違いは、次の通りです。
